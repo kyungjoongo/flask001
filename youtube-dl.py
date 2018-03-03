@@ -7,31 +7,32 @@ import pafy
 app = Flask(__name__)
 CORS(app)
 
-@app.route('/', methods=['GET', 'POST'])
-def home_view():
-    if request.method == 'POST':
-        try:
-            videourl = request.form.get("videoUrl", "https://www.youtube.com/watch?v=xuAH21DkJow")
-            video = pafy.new(videourl)
-            streams = video.streams
-            streams_info = []
-            for s in streams:
-                streams_info.append((s.resolution, s.extension, s.get_filesize(), s.url))
-
-            videoInfo = {
-                "title": video.title,
-                "author": video.author,
-                "url": "http://www.youtube.com/watch?v=" + video.videoid,
-                "duration": video.duration,
-                "thumbnail": video.thumb,
-                "streams": streams_info
-            }
-            return jsonify({"sucesso": True, "video": videoInfo})
-        except ValueError, e:
-            return jsonify({"sucesso": False, 'error': e.message})
-
-    else:
-        return render_template("index.html")
+#
+# @app.route('/', methods=['GET', 'POST'])
+# def home_view():
+#     if request.method == 'POST':
+#         try:
+#             videourl = request.form.get("videoUrl", "https://www.youtube.com/watch?v=xuAH21DkJow")
+#             video = pafy.new(videourl)
+#             streams = video.streams
+#             streams_info = []
+#             for s in streams:
+#                 streams_info.append((s.resolution, s.extension, s.get_filesize(), s.url))
+#
+#             videoInfo = {
+#                 "title": video.title,
+#                 "author": video.author,
+#                 "url": "http://www.youtube.com/watch?v=" + video.videoid,
+#                 "duration": video.duration,
+#                 "thumbnail": video.thumb,
+#                 "streams": streams_info
+#             }
+#             return jsonify( videoInfo)
+#        except ValueError as e:
+#             return jsonify({"sucesso": False, 'error': e.message})
+#
+#     else:
+#         return render_template("index.html")
 
 
 @app.route('/ddd', methods=['GET', 'POST'])
@@ -55,8 +56,8 @@ def home_view222():
                 "thumbnail": video.thumb,
                 "streams": streams_info
             }
-            return jsonify({"sucesso": True, "video": videoInfo})
-        except ValueError, e:
+            return jsonify(videoInfo)
+        except ValueError as e:
             return jsonify({"sucesso": False, 'error': e.message})
 
     else:
@@ -91,8 +92,8 @@ def aaa():
                 "thumbnail": video.thumb,
                 "streams": streams_info
             }
-            return jsonify({"sucesso": True, "video": videoInfo})
-        except ValueError, e:
+            return jsonify(videoInfo)
+        except ValueError as e:
             return jsonify({"sucesso": False, 'error': e.message})
 
     else:
